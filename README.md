@@ -28,7 +28,7 @@ thanksgiving-2026/
 │   └── app.js              the app logic
 └── images/
     ├── icons/              app icons (home screen, browser tab)
-    └── (your photos go here; see "Add the food photos")
+    └── turkey.jpg, potatoes.jpg, mac-and-cheese.jpg, carrots.jpg, gravy.jpg
 ```
 
 Every path is relative, so the site works at a project address such as `https://USERNAME.github.io/thanksgiving-2026/`.
@@ -86,9 +86,9 @@ After the first visit, everything (pages, styles, data, icons and any photos you
 
 ---
 
-## Add the food photos
+## Food photos
 
-The recipe cards look for these exact file names in the `images/` folder:
+The site ships with a sample food photo for each recipe (AI-generated illustrations, not photos of these exact recipes). To use your own, replace the file with the same name. The recipe cards look for these exact file names in the `images/` folder:
 
 | File | Recipe |
 |---|---|
@@ -98,10 +98,10 @@ The recipe cards look for these exact file names in the `images/` folder:
 | `images/carrots.jpg` | Orange-Thyme Butter-Roasted Carrots |
 | `images/gravy.jpg` | Deep Turkey Gravy |
 
-- Until a photo exists, its card shows a warm color gradient instead, with no broken image.
+- If a photo is missing, its card shows a warm color gradient instead, with no broken image.
 - For fast loading on store Wi-Fi, use landscape photos about **1600 × 1000 px**, saved as JPEG at about 75–80% quality (roughly 150–300 KB each). The card crops to a 16:10 frame.
 - Upload them to `images/` (on GitHub: open the `images` folder, then **Add file → Upload files**), then **bump the version** (below).
-- The **Notes** tab shows which photos are still missing.
+- The **Notes** tab shows any photos that are missing.
 
 ---
 

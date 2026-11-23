@@ -1,7 +1,7 @@
 /* Thanksgiving 2026: service worker
    Caches every file so the guide works offline after the first visit.
    When you change any file and push it, bump VERSION so phones refresh. */
-var VERSION = 'tg2026-v1';
+var VERSION = 'tg2026-v2';
 
 var CORE = [
   './',
