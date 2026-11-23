@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Thanksgiving 2026</title>
+  <meta name="description" content="Shopping list, game plan, recipes and Cook Mode for Thanksgiving 2026.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#FBF8F3" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161412" media="(prefers-color-scheme: dark)">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Thanksgiving">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="images/icons/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="images/icons/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Timer-finished alert (shown on every screen) -->
+  <div id="alarm" class="alarm" role="alert" hidden></div>
+
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <div class="brand">
+        <p class="brand__title">Thanksgiving 2026</p>
+        <p class="brand__date" id="header-date">Thursday, November 26</p>
+      </div>
+      <p class="net-pill" id="net-pill" hidden>Offline · saved copy</p>
+    </div>
+  </header>
+
+  <main id="main" class="wrap" tabindex="-1">
+    <div id="boot-error" class="callout callout--alert" hidden></div>
+
+    <section id="panel-shop" class="panel" role="tabpanel" aria-labelledby="tab-shop" hidden></section>
+    <section id="panel-plan" class="panel" role="tabpanel" aria-labelledby="tab-plan" hidden></section>
+    <section id="panel-recipes" class="panel" role="tabpanel" aria-labelledby="tab-recipes" hidden></section>
+    <section id="panel-cook" class="panel" role="tabpanel" aria-labelledby="tab-cook" hidden></section>
+    <section id="panel-notes" class="panel" role="tabpanel" aria-labelledby="tab-notes" hidden></section>
+
+    <footer class="site-footer" id="site-footer"></footer>
+
+    <noscript>
+      <p class="callout callout--alert">This guide needs JavaScript turned on to show the shopping list, plan and recipes.</p>
+    </noscript>
+  </main>
+
+  <!-- Running timers, pinned above the tab bar -->
+  <div id="dock" class="dock" hidden></div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <nav class="tabbar" aria-label="Sections">
+    <div class="tabbar__inner" role="tablist">
+      <button class="tab" id="tab-shop" role="tab" aria-controls="panel-shop" aria-selected="false" data-tab="shop" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9h17l-1.6 10.2a2 2 0 0 1-2 1.8H7.1a2 2 0 0 1-2-1.8L3.5 9Z"/><path d="M8 9l4-5.5L16 9"/><path d="M9.5 13v4M14.5 13v4"/></svg>
+        <span>Shop</span>
+      </button>
+      <button class="tab" id="tab-plan" role="tab" aria-controls="panel-plan" aria-selected="false" data-tab="plan" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12.5" r="8.5"/><path d="M12 7.5v5l3.2 2"/></svg>
+        <span>Plan</span>
+      </button>
+      <button class="tab" id="tab-recipes" role="tab" aria-controls="panel-recipes" aria-selected="false" data-tab="recipes" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 5.5A2.5 2.5 0 0 1 7 3h12.5v15H7a2.5 2.5 0 0 0-2.5 2.5v-15Z"/><path d="M4.5 20.5A2.5 2.5 0 0 1 7 18h12.5v3H7"/><path d="M9 7.5h6.5"/></svg>
+        <span>Recipes</span>
+      </button>
+      <button class="tab" id="tab-cook" role="tab" aria-controls="panel-cook" aria-selected="false" data-tab="cook" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h16v4.5A4.5 4.5 0 0 1 15.5 20h-7A4.5 4.5 0 0 1 4 15.5V11Z"/><path d="M2 11h20"/><path d="M9 3.5c-.8 1 .8 2-.1 3.5M13 3.5c-.8 1 .8 2-.1 3.5"/></svg>
+        <span>Cook</span>
+        <b class="tab__badge" id="cook-badge" hidden></b>
+      </button>
+      <button class="tab" id="tab-notes" role="tab" aria-controls="panel-notes" aria-selected="false" data-tab="notes" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6V3Z"/><path d="M15 3v4h4"/><path d="M9 12h7M9 16h5"/></svg>
+        <span>Notes</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Cook Mode: one step at a time -->
+  <div id="cookmode" class="cookmode" role="dialog" aria-modal="true" aria-labelledby="cm-title" hidden>
+    <div class="cookmode__top">
+      <button class="icon-btn" type="button" data-action="cook-close" aria-label="Close Cook Mode">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="cookmode__heading">
+        <p class="eyebrow" id="cm-section">Method</p>
+        <h2 id="cm-title">Cook Mode</h2>
+      </div>
+      <button class="wake-btn" type="button" data-action="wake-toggle" id="cm-wake" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>
+        <span>Awake</span>
+      </button>
+    </div>
+    <div class="cookmode__meta">
+      <div class="progress" aria-hidden="true"><span id="cm-bar"></span></div>
+      <div class="cookmode__count">
+        <p id="cm-count">Step 1 of 1</p>
+        <label class="cm-jump">
+          <span class="sr-only">Jump to section</span>
+          <select id="cm-jump"></select>
+        </label>
+      </div>
+    </div>
+    <div class="cookmode__body" id="cm-body" tabindex="-1">
+      <p class="cookmode__num" id="cm-num" aria-hidden="true">1</p>
+      <p class="cookmode__text" id="cm-text" aria-live="polite"></p>
+      <div class="cookmode__timers" id="cm-timers"></div>
+      <label class="check check--big" id="cm-done-row">
+        <input type="checkbox" id="cm-done">
+        <span class="check__body"><span class="check__text">Mark this step done</span></span>
+      </label>
+      <details class="cm-ref" id="cm-ingredients">
+        <summary><span class="eyebrow">Ingredients</span><span class="chev" aria-hidden="true"></span></summary>
+        <div class="cm-ref__body" id="cm-ingredients-body"></div>
+      </details>
+      <details class="cm-ref" id="cm-notes">
+        <summary><span class="eyebrow">Notes</span><span class="chev" aria-hidden="true"></span></summary>
+        <div class="cm-ref__body" id="cm-notes-body"></div>
+      </details>
+      <p class="cookmode__wake-note" id="cm-wake-note"></p>
+    </div>
+    <div class="cookmode__dock" id="cm-dock" hidden></div>
+    <div class="cookmode__nav">
+      <button class="btn btn--ghost btn--xl" type="button" data-action="cook-prev" id="cm-prev">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg> Back
+      </button>
+      <button class="btn btn--primary btn--xl" type="button" data-action="cook-next" id="cm-next">
+        Next <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+</body>
+</html>
